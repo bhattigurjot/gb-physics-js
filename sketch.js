@@ -1,4 +1,4 @@
-let p = new Particle(10,10,100,100);
+let p = new ParticleDraw(10,10,10,10);
 
 let canvas;
 
@@ -8,5 +8,7 @@ function setup() {
 }
 
 function draw() {
+    background(50);
+    p.update();
     p.draw();
 }
