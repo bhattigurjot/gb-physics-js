@@ -14,8 +14,6 @@ class Particle {
             // return; // for time-being
         }
 
-        console.log('yo');
-
         // Update position
         this.position.addScaledVector(this.velocity, duration);
         
