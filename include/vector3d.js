@@ -42,6 +42,18 @@ class Vector3D {
         this.z *= s;
     }
 
+    addScaledVector(_v, scale) {
+        this.x += _v.x * scale;
+        this.y += _v.y * scale;
+        this.z += _v.z * scale;
+    }
+
+    componentProductUpdate(_v) {
+        this.x *= _v.x;
+		this.y *= _v.y;
+		this.z *= _v.z;
+    }
+
     addVector(_v) {
         this.x += _v.x;
         this.y += _v.y;
