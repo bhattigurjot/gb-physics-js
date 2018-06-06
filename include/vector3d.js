@@ -15,7 +15,7 @@ class Vector3D {
     }
 
     normalize() {
-        m = this.magnitude();
+        let m = this.magnitude();
         if (m > 0) {
             this.scale(1.0/m);
         }
@@ -66,9 +66,27 @@ class Vector3D {
         this.z -= _v.z;
     }
 
-    
+    orthogonalBasis(_vA, _vB, _vC)
+    {
+        _vA.normalize();
+        _vC = Vector3D.vectorProduct(_vA, _vB)
+        if (_vC.magnitudeSquare() == 0.0) 
+        {
+            return;
+        }
+        _vC.normalize();
+        _vB = Vector3D.vectorProduct(_vC, _vA)
+    }
 
-    
+    // Static Functions
+    static scalerProduct(_vA, _vB) {
+        return (_vA.x * _vB.x + _vA.y * _vB.y + _vC.z * _vC.z) 
+    }
 
-    
+    static vectorProduct(_vA, _vB) {
+        return Vector3D(_vA.y * _vB.z - _vA.z * _vB.y,
+                        _vA.z * _vB.x - _vA.x * _vB.z,
+                        _vA.x * _vB.y - _vA.y * _vB.x);
+    }
+
 }
