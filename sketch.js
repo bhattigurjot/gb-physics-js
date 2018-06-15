@@ -1,4 +1,5 @@
-let p = new ParticleDraw(10,10,10,10);
+// let p = new ParticleDraw(10,10,10,10);
+let b = new Ballistic();
 
 let canvas;
 
@@ -9,6 +10,14 @@ function setup() {
 
 function draw() {
     background(50);
-    p.update();
-    p.draw();
+    b.update();
+    b.display();
+}
+
+function keyPressed() {
+    b.keyPressed(keyCode);
+}
+
+function mouseClicked() {
+    b.mouseClicked();
 }
