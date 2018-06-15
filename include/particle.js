@@ -4,6 +4,8 @@ class Particle {
         this.velocity = new Vector3D(0,0,0);
         this.acceleration = new Vector3D(0,0,0);
 
+        this.forceAccum = new Vector3D(0,0,0);
+
         this.damping = 0.0;
         this.inverseMass = 0.0;
     }
@@ -19,35 +21,91 @@ class Particle {
         
         // Calculate acceleration
         let resultAcc = this.acceleration;
-        // let resultAcc = new Vector3D();
+        // F = ma
+        resultAcc.addScaledVector(this.forceAccum, this.inverseMass);
 
         // Update velocity
         this.velocity.addScaledVector(resultAcc, duration);
 
         // Add drag to velocity
         this.velocity *= Math.pow(this.damping, duration);
+
+        // Clear forces
+        this.clearAccumulator();
+    }
+
+    setMass(_mass) {
+        if (_mass) {
+            this.inverseMass = 1.0/_mass;
+        } else {
+            Error('Mass cannot be zero.')
+        }
+    }
+
+    getMass() {
+        if (this.inverseMass == 0.0) {
+            return Number.MAX_VALUE;
+        } else{
+            return 1.0/this.inverseMass;
+        }
+    }
+
+    setInverseMass(_inverseMass) {
+        this.inverseMass = _inverseMass;
+    }
+
+    getInverseMass() {
+        return this.inverseMass;
+    }
+
+    hasInfiniteMass() {
+        return this.inverseMass >= 0.0;
+    }
+
+    setDamping(_damping) {
+        this.damping = this.damping;
+    }
+
+    getDamping() {
+        return this.damping;
+    }
+
+    setPosition(_x, _y, _z) {
+        this.position.x = _x;
+        this.position.y = _y;
+        this.position.z = _z;
+    }
+
+    getPosition() {
+        return this.position;
+    }
+
+    setVelocity(_x, _y, _z) {
+        this.velocity.x = _x;
+        this.velocity.y = _y;
+        this.velocity.z = _z;
+    }
+
+    getVelocity() {
+        return this.velocity;
+    }
+
+    setAcceleration(_x, _y, _z) {
+        this.acceleration.y = _y;
+        this.acceleration.z = _z;
+        this.acceleration.x = _x;
+    }
+
+    getAcceleration() {
+        return this.acceleration;
+    }
+
+    clearAccumulator() {
+        this.forceAccum.clear();
+    }
+
+    addForce(_force) {
+        this.forceAccum.addVector(_force);
     }
 }
 
-class ParticleDraw extends Particle {
-    constructor(_x, _y, _z, _r) {
-        super (_x, _y, _z);
-
-        this.r = _r;
-    }
-
-    update() {
-        this.velocity = new Vector3D(1,1,1);
-        this.accleration = new Vector3D(1,0,0);
-
-        super.integrate(1);
-    }
-
-    draw() {
-        noStroke();
-        fill(255);
-        // sphere(this.r);
-        ellipseMode(CENTER);
-        ellipse(this.position.x, this.position.y, this.r, this.r);
-    }
-}
