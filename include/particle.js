@@ -10,14 +10,19 @@ class Particle {
         this.inverseMass = 0.0;
     }
 
-    integrate(duration) {
+    integrate(_duration) {
         // No integration because of Infinite Mass
         if (this.inverseMass <= 0.0) {
-            // return; // for time-being
+            return; // for time-being
+        }
+
+        // Return if duration is less than 0.0
+        if (_duration <= 0.0) {
+            return;
         }
 
         // Update position
-        this.position.addScaledVector(this.velocity, duration);
+        this.position.addScaledVector(this.velocity, _duration);
         
         // Calculate acceleration
         let resultAcc = this.acceleration;
@@ -25,17 +30,17 @@ class Particle {
         resultAcc.addScaledVector(this.forceAccum, this.inverseMass);
 
         // Update velocity
-        this.velocity.addScaledVector(resultAcc, duration);
+        this.velocity.addScaledVector(resultAcc, _duration);
 
         // Add drag to velocity
-        this.velocity *= Math.pow(this.damping, duration);
+        this.velocity.scale(Math.pow(this.damping, _duration));
 
         // Clear forces
         this.clearAccumulator();
     }
 
     setMass(_mass) {
-        if (_mass) {
+        if (_mass > 0.0) {
             this.inverseMass = 1.0/_mass;
         } else {
             Error('Mass cannot be zero.')
@@ -63,7 +68,7 @@ class Particle {
     }
 
     setDamping(_damping) {
-        this.damping = this.damping;
+        this.damping = _damping;
     }
 
     getDamping() {
