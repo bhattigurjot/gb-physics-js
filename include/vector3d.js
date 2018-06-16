@@ -43,9 +43,9 @@ class Vector3D {
     }
 
     scale(_s) {
-        this.x *= s;
-        this.y *= s;
-        this.z *= s;
+        this.x *= _s;
+        this.y *= _s;
+        this.z *= _s;
     }
 
     addScaledVector(_v, scale) {
