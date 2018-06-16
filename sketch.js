@@ -1,4 +1,3 @@
-// let p = new ParticleDraw(10,10,10,10);
 let b = new Ballistic();
 
 let canvas;
